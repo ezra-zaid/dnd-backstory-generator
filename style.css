@@ -467,6 +467,7 @@ body {
   font-style: italic;
 }
 
+<<<<<<< HEAD
 /* ===== CHARACTER SHEET ===== */
 .sheet-body { display: flex; flex-direction: column; gap: 0.9rem; }
 .sheet-section {}
@@ -506,6 +507,8 @@ body {
   font-style: italic;
 }
 
+=======
+>>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
 /* ===== ART PROMPT ===== */
 .art-prompt-text {
   font-family: 'EB Garamond', serif;
