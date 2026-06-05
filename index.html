@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&D Backstory Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="header-ornament" aria-hidden="true">⚔</div>
+      <h1 class="header-title">Backstory Forge</h1>
+      <p class="header-sub">Craft your legend</p>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <form id="backstory-form" class="form-card" novalidate>
+
+      <!-- Character Name -->
+      <div class="field-group">
+        <label class="field-label" for="char-name">Character Name <span class="field-hint">(optional)</span></label>
+        <div class="name-row">
+          <input type="text" id="char-name" class="text-input" placeholder="e.g. Aelindra Moonsong" autocomplete="off" maxlength="40">
+          <button type="button" class="random-name-btn" id="random-name-btn" title="Random name">&#x2684;</button>
+        </div>
+      </div>
+
+      <!-- Race -->
+      <div class="field-group">
+        <label class="field-label">Race</label>
+        <div class="option-grid" id="race-grid" role="radiogroup" aria-label="Race"></div>
+      </div>
+
+      <!-- Class -->
+      <div class="field-group">
+        <label class="field-label">Class</label>
+        <div class="option-grid" id="class-grid" role="radiogroup" aria-label="Class"></div>
+      </div>
+
+      <!-- Background -->
+      <div class="field-group">
+        <label class="field-label" for="background-select">Background</label>
+        <select id="background-select" class="select-input">
+          <option value="">Select a background…</option>
+        </select>
+      </div>
+
+      <!-- Feats -->
+      <div class="field-group">
+        <label class="field-label">Feats <span class="field-hint">(pick any — up to 3 woven into the story)</span></label>
+        <div class="feat-grid" id="feat-grid" role="group" aria-label="Feats"></div>
+      </div>
+
+      <!-- Tone -->
+      <div class="field-group">
+        <label class="field-label">Tone</label>
+        <div class="tone-row" id="tone-row" role="radiogroup" aria-label="Tone"></div>
+      </div>
+
+      <div id="form-error" class="form-error hidden"></div>
+
+      <button type="submit" class="generate-btn" id="generate-btn">
+        <span class="btn-diamond" aria-hidden="true">✦</span>
+        Generate Backstory
+        <span class="btn-diamond" aria-hidden="true">✦</span>
+      </button>
+
+    </form>
+
+    <!-- Result -->
+    <div id="result-section" class="result-section hidden">
+      <div class="scroll-wrap">
+        <div class="scroll-top-bar"></div>
+        <div class="scroll-body-wrap">
+          <div class="scroll-char-name" id="result-name"></div>
+          <div class="scroll-meta" id="result-meta"></div>
+          <div class="scroll-divider" aria-hidden="true">— ✦ —</div>
+          <div class="scroll-text" id="result-text"></div>
+        </div>
+        <div class="scroll-bottom-bar"></div>
+        <div class="scroll-actions">
+          <button type="button" class="action-btn" id="regenerate-btn">↺ Regenerate</button>
+          <button type="button" class="action-btn" id="copy-btn">⎘ Copy</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>For the table. For the legend. For the story.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
