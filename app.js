@@ -1079,11 +1079,14 @@ function loadCharacter(c) {
 
   // Render stored result
   if (c.backstory) {
+    const loadedInputs = { name: c.name, race: c.race, characterClass: c.characterClass, subclass: c.subclass || null, background: c.background, alignment: c.alignment };
+    const sheet = generateCharacterSheet(loadedInputs);
     renderResult(
-      { name: c.name, race: c.race, characterClass: c.characterClass, background: c.background, alignment: c.alignment },
+      loadedInputs,
       c.backstory,
       { trait: c.trait, ideal: c.ideal, bond: c.bond, flaw: c.flaw },
-      c.artPrompt || ''
+      c.artPrompt || '',
+      sheet
     );
   }
   document.getElementById('panel-builder').scrollIntoView({ behavior: 'smooth' });
