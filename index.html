@@ -49,6 +49,13 @@
           <div class="option-grid" id="class-grid" role="radiogroup" aria-label="Class"></div>
         </div>
 
+        <div class="field-group hidden" id="subclass-group">
+          <label class="field-label" for="subclass-select">Subclass <span class="field-hint">(optional)</span></label>
+          <select id="subclass-select" class="select-input">
+            <option value="">Select a subclass…</option>
+          </select>
+        </div>
+
         <div class="field-group">
           <label class="field-label" for="background-select">Background</label>
           <select id="background-select" class="select-input">
@@ -131,6 +138,12 @@
               <div class="pf-text" id="result-flaw"></div>
             </div>
           </div>
+        </div>
+
+        <!-- Character sheet reference -->
+        <div class="parchment-card">
+          <h3 class="card-heading">Character Sheet Reference</h3>
+          <div id="result-sheet" class="sheet-body"></div>
         </div>
 
         <!-- Art prompt -->

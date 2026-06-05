@@ -467,6 +467,45 @@ body {
   font-style: italic;
 }
 
+/* ===== CHARACTER SHEET ===== */
+.sheet-body { display: flex; flex-direction: column; gap: 0.9rem; }
+.sheet-section {}
+.sheet-section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--gold-dark);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+.sheet-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.sheet-tag {
+  background: var(--card-bg-alt);
+  border: 1px solid #c8a870;
+  border-radius: 4px;
+  padding: 0.2rem 0.55rem;
+  font-family: 'EB Garamond', serif;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.sheet-tag.save-tag { background: #e8d0c8; border-color: #a06040; }
+.sheet-tag.trait-tag { background: #d8e8d0; border-color: #406040; }
+.sheet-tag.feature-tag { background: #d0d8e8; border-color: #405080; }
+.sheet-subclass-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 0.2rem;
+}
+.sheet-subclass-features {
+  font-family: 'EB Garamond', serif;
+  font-size: 0.92rem;
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
 /* ===== ART PROMPT ===== */
 .art-prompt-text {
   font-family: 'EB Garamond', serif;

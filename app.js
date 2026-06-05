@@ -1,3 +1,207 @@
+// ===== 5E SRD DATA =====
+
+const SUBCLASSES = {
+  barbarian: [{ key: 'berserker',       label: 'Path of the Berserker',    features: 'Frenzy, Mindless Rage, Intimidating Presence, Retaliation' }],
+  bard:      [{ key: 'lore',            label: 'College of Lore',           features: 'Bonus Proficiencies, Cutting Words, Additional Magical Secrets, Peerless Skill' }],
+  cleric: [
+    { key: 'life',     label: 'Life Domain',    features: 'Disciple of Life, Preserve Life, Blessed Healer, Divine Strike, Supreme Healing' },
+    { key: 'light',    label: 'Light Domain',   features: 'Warding Flare, Radiance of the Dawn, Improved Flare, Potent Spellcasting, Corona of Light' },
+    { key: 'trickery', label: 'Trickery Domain',features: 'Invoke Duplicity, Cloak of Shadows, Divine Strike, Improved Duplicity' },
+  ],
+  druid: [
+    { key: 'land', label: 'Circle of the Land', features: 'Bonus Cantrip, Natural Recovery, Circle Spells, Land\'s Stride, Nature\'s Ward, Nature\'s Sanctuary' },
+    { key: 'moon', label: 'Circle of the Moon', features: 'Combat Wild Shape, Circle Forms, Elemental Wild Shape, Thousand Forms' },
+  ],
+  fighter: [
+    { key: 'champion',       label: 'Champion',        features: 'Improved Critical, Remarkable Athlete, Additional Fighting Style, Superior Critical, Survivor' },
+    { key: 'battle-master',  label: 'Battle Master',   features: 'Combat Superiority, Student of War, Know Your Enemy, Improved Combat Superiority, Relentless' },
+    { key: 'eldritch-knight',label: 'Eldritch Knight', features: 'Spellcasting, Weapon Bond, War Magic, Eldritch Strike, Arcane Charge, Improved War Magic' },
+  ],
+  monk: [
+    { key: 'open-hand',      label: 'Way of the Open Hand',    features: 'Open Hand Technique, Wholeness of Body, Tranquility, Quivering Palm' },
+    { key: 'shadow',         label: 'Way of Shadow',            features: 'Shadow Arts, Shadow Step, Cloak of Shadows, Opportunist' },
+    { key: 'four-elements',  label: 'Way of the Four Elements', features: 'Disciple of the Elements, Elemental Disciplines' },
+  ],
+  paladin: [
+    { key: 'devotion',  label: 'Oath of Devotion',  features: 'Sacred Weapon, Turn the Unholy, Aura of Devotion, Purity of Spirit, Holy Nimbus' },
+    { key: 'ancients',  label: 'Oath of the Ancients', features: 'Nature\'s Wrath, Turn the Faithless, Aura of Warding, Undying Sentinel, Elder Champion' },
+    { key: 'vengeance', label: 'Oath of Vengeance', features: 'Abjure Enemy, Vow of Enmity, Relentless Avenger, Soul of Vengeance, Avenging Angel' },
+  ],
+  ranger: [
+    { key: 'hunter',       label: 'Hunter',       features: 'Hunter\'s Prey, Defensive Tactics, Multiattack, Superior Hunter\'s Defense' },
+    { key: 'beast-master', label: 'Beast Master', features: 'Ranger\'s Companion, Exceptional Training, Bestial Fury, Share Spells' },
+  ],
+  rogue: [
+    { key: 'thief',           label: 'Thief',            features: 'Fast Hands, Second-Story Work, Supreme Sneak, Use Magic Device, Thief\'s Reflexes' },
+    { key: 'assassin',        label: 'Assassin',         features: 'Bonus Proficiencies, Assassinate, Infiltration Expertise, Impostor, Death Strike' },
+    { key: 'arcane-trickster',label: 'Arcane Trickster', features: 'Spellcasting, Mage Hand Legerdemain, Magical Ambush, Versatile Trickster, Spell Thief' },
+  ],
+  sorcerer: [
+    { key: 'draconic',   label: 'Draconic Bloodline', features: 'Dragon Ancestor, Draconic Resilience, Elemental Affinity, Dragon Wings, Draconic Presence' },
+    { key: 'wild-magic', label: 'Wild Magic',          features: 'Wild Magic Surge, Tides of Chaos, Bend Luck, Controlled Chaos, Spell Bombardment' },
+  ],
+  warlock: [
+    { key: 'archfey',       label: 'The Archfey',       features: 'Fey Presence, Misty Escape, Beguiling Defenses, Dark Delirium' },
+    { key: 'fiend',         label: 'The Fiend',         features: 'Dark One\'s Blessing, Dark One\'s Own Luck, Fiendish Resilience, Hurl Through Hell' },
+    { key: 'great-old-one', label: 'The Great Old One', features: 'Awakened Mind, Entropic Ward, Thought Shield, Create Thrall' },
+  ],
+  wizard: [
+    { key: 'abjuration',    label: 'School of Abjuration',    features: 'Abjuration Savant, Arcane Ward, Projected Ward, Improved Abjuration, Spell Resistance' },
+    { key: 'conjuration',   label: 'School of Conjuration',   features: 'Conjuration Savant, Minor Conjuration, Benign Transposition, Focused Conjuration, Durable Summons' },
+    { key: 'divination',    label: 'School of Divination',    features: 'Divination Savant, Portent, Expert Divination, The Third Eye, Greater Portent' },
+    { key: 'enchantment',   label: 'School of Enchantment',   features: 'Enchantment Savant, Hypnotic Gaze, Instinctive Charm, Split Enchantment, Alter Memories' },
+    { key: 'evocation',     label: 'School of Evocation',     features: 'Evocation Savant, Sculpt Spells, Potent Cantrip, Empowered Evocation, Overchannel' },
+    { key: 'illusion',      label: 'School of Illusion',      features: 'Illusion Savant, Improved Minor Illusion, Malleable Illusions, Illusory Self, Illusory Reality' },
+    { key: 'necromancy',    label: 'School of Necromancy',    features: 'Necromancy Savant, Grim Harvest, Undead Thralls, Inured to Undeath, Command Undead' },
+    { key: 'transmutation', label: 'School of Transmutation', features: 'Transmutation Savant, Minor Alchemy, Transmuter\'s Stone, Shapechanger, Master Transmuter' },
+  ],
+};
+
+const SUBCLASS_NARRATIVES = {
+  berserker:       'The Path of the Berserker called to {name} like a wound that never fully closed — frenzy as a weapon, fury as armor.',
+  lore:            'The College of Lore shaped {name}\'s understanding of the craft: every story a lesson, every secret a verse waiting to be set.',
+  life:            'The Life Domain drew {name} toward healing as a form of defiance — refusing to let death have the final word.',
+  light:           'The Light Domain gave {name}\'s faith a visible edge: radiance as weapon, illumination as mercy.',
+  trickery:        'The Trickery Domain suited {name} entirely — a god who valued cleverness and the willingness to use it in service of good.',
+  land:            'The Circle of the Land anchored {name} to a specific place in the natural world, drawing power from the earth beneath {their} feet.',
+  moon:            'The Circle of the Moon unlocked something primal — the ability to become the wilderness, not merely speak for it.',
+  champion:        'The Champion\'s path was the purest kind of mastery: train harder, hit harder, survive longer. {name} committed completely.',
+  'battle-master': 'The Battle Master tradition taught {name} that combat is not brute force — it is a conversation, and the better tactician writes the ending.',
+  'eldritch-knight':'The Eldritch Knight path suited {name}: the discipline of the fighter, supplemented by the precision of arcane power.',
+  'open-hand':     'The Way of the Open Hand revealed to {name} that the body is both the most complete weapon and the most complete instrument of peace.',
+  shadow:          'The Way of Shadow gave {name} tools that suited the work: to move unseen, strike from darkness, and leave no evidence of passage.',
+  'four-elements': 'The Way of the Four Elements showed {name} that the forces of nature could be shaped through discipline alone — no components, only will.',
+  devotion:        'The Oath of Devotion bound {name} to honesty, courage, and compassion — a code worn not as restriction but as identity.',
+  ancients:        'The Oath of the Ancients made {name} a guardian of light itself, sworn against any force that would see it extinguished.',
+  vengeance:       'The Oath of Vengeance was sworn over something specific. {name} does not speak of it. The oath speaks instead.',
+  hunter:          'The Hunter archetype gave {name}\'s instincts a discipline: identify the apex threat, study it, and remove it.',
+  'beast-master':  'The Beast Master bond transformed {name}\'s relationship with the wild — one companion, chosen carefully, trusted completely.',
+  thief:           'The Thief archetype refined {name}\'s instincts into expertise: faster hands, higher ledges, better use of everything at hand.',
+  assassin:        'The Assassin archetype gave {name}\'s skills a cold, precise direction. Every identity is a costume. Every entrance, a performance.',
+  'arcane-trickster':'The Arcane Trickster path combined {name}\'s natural talents with borrowed magic — enough to make everything {they} already did considerably harder to stop.',
+  draconic:        'Draconic Bloodline runs through {name}\'s veins like fire through stone — ancient, powerful, and increasingly difficult to conceal.',
+  'wild-magic':    'Wild Magic surges through {name} without pattern or permission — a power that defies control and occasionally defies physics.',
+  archfey:         'The Archfey wove beauty and madness into the pact in equal measure. {name} accepted both, knowing they were inseparable.',
+  fiend:           'The Fiend\'s pact gave {name} exactly what was asked for and exactly as much as was agreed to — not a drop more, not a drop less.',
+  'great-old-one': 'The Great Old One does not explain itself. {name} carries knowledge that cannot be unlearned, in service of a purpose that cannot be fully named.',
+  abjuration:      'The School of Abjuration appealed to {name}\'s instinct for protection — magic as ward, as barrier, as the wall between harm and those behind it.',
+  conjuration:     'The School of Conjuration gave {name}\'s imagination a direct line to reality: anything could be summoned, if the geometry was correct.',
+  divination:      'The School of Divination made {name} dangerous in a quieter way — not by changing what would happen, but by knowing it first.',
+  enchantment:     'The School of Enchantment showed {name} how fragile the mind is, and demanded that fragility be handled with care.',
+  evocation:       'The School of Evocation fit {name}\'s temperament exactly: direct, powerful, capable of reshaping a battlefield with a single word.',
+  illusion:        'The School of Illusion revealed to {name} that reality is partly a negotiation — and that {they} had always been a better negotiator than most.',
+  necromancy:      'The School of Necromancy drew {name} toward the boundary between life and death — not to destroy, but to understand what waits on either side.',
+  transmutation:   'The School of Transmutation gave {name} a way to see the world as it could be rather than as it is — and the tools to close the gap.',
+};
+
+const RACIAL_TRAITS = {
+  human:      { traits: ['Extra Skill Proficiency', 'Versatile: +1 to all ability scores', 'Bonus Feat (variant human)'], narrative: 'Human adaptability means {name} picks up skills others spend years mastering — a proficiency here, a strength there, always closing the gap.' },
+  elf:        { traits: ['Darkvision 60 ft', 'Fey Ancestry: advantage vs. charm, immune to magical sleep', 'Trance: 4-hour meditation instead of sleep', 'Keen Senses: Perception proficiency'], narrative: 'Fey Ancestry means charm effects find little purchase on {name}, and {they} enter sleep\'s cousin — trance — each night with memories older than most kingdoms.' },
+  dwarf:      { traits: ['Darkvision 60 ft', 'Dwarven Resilience: advantage vs. poison, resistance to poison damage', 'Dwarven Combat Training: proficiency with axes and hammers', 'Stonecunning: double Proficiency on stonework History checks'], narrative: 'Dwarven Resilience gives {name} a constitution that poison and hardship have both tested — and that neither has managed to break.' },
+  halfling:   { traits: ['Lucky: reroll 1s on attack rolls, ability checks, and saving throws', 'Brave: advantage on saves vs. being frightened', 'Halfling Nimbleness: move through spaces of larger creatures'], narrative: 'Halfling Luck is not superstition — it is a documented pattern. When {name} rolls a 1, the universe tends to offer a correction.' },
+  tiefling:   { traits: ['Darkvision 60 ft', 'Hellish Resistance: resistance to fire damage', 'Infernal Legacy: Thaumaturgy cantrip, Hellish Rebuke, Darkness spells'], narrative: 'Hellish Resistance makes {name} comfortable where others flinch — fire has always been a familiar presence, not a threat.' },
+  'half-orc': { traits: ['Darkvision 60 ft', 'Relentless Endurance: drop to 1 HP instead of 0 (once per long rest)', 'Savage Attacks: extra damage die on melee critical hits', 'Menacing: Intimidation proficiency'], narrative: 'Relentless Endurance has saved {name}\'s life at least once — that particular moment of surviving what should have been final, and rising anyway.' },
+  gnome:      { traits: ['Darkvision 60 ft', 'Gnome Cunning: advantage on all INT, WIS, and CHA saves vs. magic'], narrative: 'Gnome Cunning means the magic that bends other minds tends to slide off {name} — a resistance born not of power but of sheer mental agility.' },
+  dragonborn: { traits: ['Draconic Ancestry: choose a dragon type (determines breath weapon element)', 'Breath Weapon: exhale elemental damage in cone or line (Recharge: short/long rest)', 'Damage Resistance: matching ancestry element'], narrative: 'The Breath Weapon is the most visible marker of {name}\'s heritage — a reminder, to anyone who forgets, of exactly what bloodline they are dealing with.' },
+  'half-elf': { traits: ['Darkvision 60 ft', 'Fey Ancestry: advantage vs. charm, immune to magical sleep', 'Skill Versatility: proficiency in any 2 skills of choice'], narrative: 'Skill Versatility makes {name} useful in almost any situation — the half-elf inheritance of adaptability from both sides of their lineage working in practice.' },
+};
+
+const CLASS_FEATURES = {
+  barbarian: { key: ['Rage', 'Unarmored Defense', 'Reckless Attack', 'Danger Sense', 'Extra Attack (×2)', 'Fast Movement', 'Feral Instinct', 'Brutal Critical', 'Relentless Rage', 'Persistent Rage', 'Indomitable Might', 'Primal Champion'] },
+  bard:      { key: ['Bardic Inspiration', 'Jack of All Trades', 'Song of Rest', 'Expertise', 'Font of Inspiration', 'Countercharm', 'Magical Secrets', 'Superior Inspiration'] },
+  cleric:    { key: ['Divine Domain', 'Channel Divinity', 'Turn Undead', 'Destroy Undead', 'Divine Intervention'] },
+  druid:     { key: ['Druidic', 'Wild Shape', 'Timeless Body', 'Beast Spells', 'Archdruid'] },
+  fighter:   { key: ['Fighting Style', 'Second Wind', 'Action Surge', 'Extra Attack (×3)', 'Indomitable'] },
+  monk:      { key: ['Unarmored Defense', 'Martial Arts', 'Ki', 'Unarmored Movement', 'Deflect Missiles', 'Slow Fall', 'Stunning Strike', 'Ki-Empowered Strikes', 'Evasion', 'Stillness of Mind', 'Diamond Soul', 'Timeless Body', 'Empty Body', 'Perfect Self'] },
+  paladin:   { key: ['Divine Sense', 'Lay on Hands', 'Fighting Style', 'Divine Smite', 'Divine Health', 'Sacred Oath', 'Extra Attack', 'Aura of Protection', 'Aura of Courage', 'Improved Divine Smite', 'Cleansing Touch'] },
+  ranger:    { key: ['Favored Enemy', 'Natural Explorer', 'Fighting Style', 'Primeval Awareness', 'Extra Attack', 'Land\'s Stride', 'Hide in Plain Sight', 'Vanish', 'Feral Senses', 'Foe Slayer'] },
+  rogue:     { key: ['Expertise', 'Sneak Attack', 'Thieves\' Cant', 'Cunning Action', 'Uncanny Dodge', 'Evasion', 'Reliable Talent', 'Blindsense', 'Slippery Mind', 'Elusive', 'Stroke of Luck'] },
+  sorcerer:  { key: ['Sorcerous Origin', 'Font of Magic', 'Metamagic', 'Sorcerous Restoration'] },
+  warlock:   { key: ['Otherworldly Patron', 'Eldritch Invocations', 'Pact Boon', 'Mystic Arcanum', 'Eldritch Master'] },
+  wizard:    { key: ['Arcane Recovery', 'Arcane Tradition', 'Spell Mastery', 'Signature Spells'] },
+};
+
+const CLASS_SAVES = {
+  barbarian: ['Strength', 'Constitution'],
+  bard:      ['Dexterity', 'Charisma'],
+  cleric:    ['Wisdom', 'Charisma'],
+  druid:     ['Intelligence', 'Wisdom'],
+  fighter:   ['Strength', 'Constitution'],
+  monk:      ['Strength', 'Dexterity'],
+  paladin:   ['Wisdom', 'Charisma'],
+  ranger:    ['Strength', 'Dexterity'],
+  rogue:     ['Dexterity', 'Intelligence'],
+  sorcerer:  ['Constitution', 'Charisma'],
+  warlock:   ['Wisdom', 'Charisma'],
+  wizard:    ['Intelligence', 'Wisdom'],
+};
+
+const CLASS_SKILLS = {
+  barbarian: { count: 2, options: ['Animal Handling', 'Athletics', 'Intimidation', 'Nature', 'Perception', 'Survival'] },
+  bard:      { count: 3, options: ['Any skill'] },
+  cleric:    { count: 2, options: ['History', 'Insight', 'Medicine', 'Persuasion', 'Religion'] },
+  druid:     { count: 2, options: ['Arcana', 'Animal Handling', 'Insight', 'Medicine', 'Nature', 'Perception', 'Religion', 'Survival'] },
+  fighter:   { count: 2, options: ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', 'Survival'] },
+  monk:      { count: 2, options: ['Acrobatics', 'Athletics', 'History', 'Insight', 'Religion', 'Stealth'] },
+  paladin:   { count: 2, options: ['Athletics', 'Insight', 'Intimidation', 'Medicine', 'Persuasion', 'Religion'] },
+  ranger:    { count: 3, options: ['Animal Handling', 'Athletics', 'Insight', 'Investigation', 'Nature', 'Perception', 'Stealth', 'Survival'] },
+  rogue:     { count: 4, options: ['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Performance', 'Persuasion', 'Sleight of Hand', 'Stealth'] },
+  sorcerer:  { count: 2, options: ['Arcana', 'Deception', 'Insight', 'Intimidation', 'Persuasion', 'Religion'] },
+  warlock:   { count: 2, options: ['Arcana', 'Deception', 'History', 'Intimidation', 'Investigation', 'Nature', 'Religion'] },
+  wizard:    { count: 2, options: ['Arcana', 'History', 'Insight', 'Investigation', 'Medicine', 'Religion'] },
+};
+
+const BACKGROUND_SKILLS = {
+  acolyte:        ['Insight', 'Religion'],
+  charlatan:      ['Deception', 'Sleight of Hand'],
+  criminal:       ['Deception', 'Stealth'],
+  entertainer:    ['Acrobatics', 'Performance'],
+  'folk-hero':    ['Animal Handling', 'Survival'],
+  'guild-artisan':['Insight', 'Persuasion'],
+  hermit:         ['Medicine', 'Religion'],
+  noble:          ['History', 'Persuasion'],
+  outlander:      ['Athletics', 'Survival'],
+  sage:           ['Arcana', 'History'],
+  sailor:         ['Athletics', 'Perception'],
+  soldier:        ['Athletics', 'Intimidation'],
+};
+
+const FEAT_DESCRIPTIONS = {
+  actor:                '+1 CHA. Advantage on Deception/Performance when disguised. Mimic voices with DC 15 Insight to detect.',
+  alert:                '+5 to initiative. Can\'t be surprised while conscious. Hidden attackers gain no advantage against you.',
+  athlete:              '+1 STR or DEX. Stand from prone costs 5 ft. Climb at full speed. Running jump needs only 5 ft run-up.',
+  charger:              'After Dash action, make bonus attack (+5 damage) or shove 10 ft.',
+  'crossbow-expert':    'Ignore loading. No disadvantage at melee range. Bonus hand crossbow attack after one-handed weapon attack.',
+  'dual-wielder':       '+1 AC with two weapons. Two-weapon fight with non-light weapons. Draw/stow 2 weapons per turn.',
+  durable:              '+1 CON. Minimum Hit Die roll equals twice your CON modifier.',
+  grappler:             'Advantage on attacks vs. grappled targets. Use action to pin — both you and target become restrained.',
+  'great-weapon-master':'On crit or kill → bonus attack as a bonus action. Optionally take −5 hit for +10 damage.',
+  healer:               'Stabilize with 1 HP using healer\'s kit. Kit restores 1d6+4 + creature\'s max Hit Dice HP, once per creature per rest.',
+  'heavy-armor-master': '+1 STR. Reduce nonmagical B/P/S damage by 3 while in heavy armor.',
+  'inspiring-leader':   '10-min speech: up to 6 allies gain temp HP equal to level + CHA modifier. Once per short/long rest.',
+  'keen-mind':          '+1 INT. Know north. Know hours since sunrise/sunset. Recall anything heard/seen in past month.',
+  lucky:                '3 luck points/long rest. Spend to add an extra d20 to an attack, check, or save — choose which die counts.',
+  'mage-slayer':        'Reaction attack vs. adjacent spellcasters who cast. Impose disadvantage on their concentration saves. Advantage on saves vs. their spells.',
+  'magic-initiate':     'Choose a class: learn 2 cantrips + 1 1st-level spell. Cast the spell once per long rest without a slot.',
+  mobile:               '+10 ft speed. Dash ignores difficult terrain. No opportunity attacks from any creature you attack that turn.',
+  'mounted-combatant':  'Advantage vs. unmounted smaller targets. Redirect attacks to yourself from mount. Mount automatically passes Dex saves (takes no damage on success).',
+  observant:            '+1 INT or WIS. Lip-read if language is known. +5 passive Perception and passive Investigation.',
+  'polearm-master':     'Bonus attack with opposite end (1d4 bludgeoning). Opportunity attacks when creatures enter your reach.',
+  resilient:            '+1 to chosen ability score. Gain saving throw proficiency for that ability.',
+  'ritual-caster':      'Ritual spellbook with 2 1st-level rituals. Add found ritual spells. Cast only as rituals (not with slots).',
+  sentinel:             'Opportunity attacks reduce speed to 0. Reaction attack vs. creatures targeting adjacent allies. Creatures can\'t Disengage from you.',
+  sharpshooter:         'No disadvantage at long range. Ignore half/three-quarters cover. Optionally take −5 hit for +10 damage.',
+  'shield-master':      'Bonus shove after Attack action. Add shield AC to DEX saves vs. targeted effects. No damage on successful DEX save.',
+  skilled:              'Gain proficiency in any 3 skills or tools of your choice.',
+  'spell-sniper':       'Double spell attack range. Ignore half/three-quarters cover. Learn 1 attack cantrip from any class.',
+  'tavern-brawler':     '+1 STR or CON. Proficient with improvised weapons and unarmed strikes (1d4 + STR). Bonus grapple after unarmed hit.',
+  telekinetic:          '+1 INT/WIS/CHA. Learn Mage Hand (invisible). Bonus action: telekinetically shove one creature 5 ft.',
+  telepathic:           '+1 INT/WIS/CHA. Cast Detect Thoughts once/long rest. Speak telepathically to creatures within 60 ft.',
+  tough:                'HP maximum increases by 2 per level (retroactive).',
+  'war-caster':         'Advantage on Constitution saves to maintain concentration. Cast somatic components with full hands. Use a spell as an opportunity attack.',
+  'weapon-master':      '+1 STR or DEX. Gain proficiency with 4 weapons of your choice.',
+};
+
 // ===== LISTS =====
 
 const RACE_LIST = [
@@ -385,14 +589,22 @@ function generateBackstory(inputs) {
     var para1 = capitalizeSentences(`${originLine} ${displayName.split(' ')[0]} was ${raceLine}. ${conflictLine}`);
   }
 
-  // Para 2: class awakening + ability notes
+  // Para 2: class awakening + subclass narrative + ability notes + motivation
   const awakeningLine  = fill(pick(classData.awakenings), vars);
   const motivationLine = fill(pick(classData.motivation), vars);
+  let subclassLine = '';
+  if (inputs.subclass && SUBCLASS_NARRATIVES[inputs.subclass]) {
+    subclassLine = ' ' + fill(SUBCLASS_NARRATIVES[inputs.subclass], vars);
+  }
+  let racialLine = '';
+  if (RACIAL_TRAITS[race]?.narrative) {
+    racialLine = ' ' + fill(RACIAL_TRAITS[race].narrative, vars);
+  }
   let abilityLine = '';
   if (abilityNotes && abilityNotes.trim()) {
     abilityLine = ` Among those who knew ${displayName.split(' ')[0]}, the first thing noted was always this: ${abilityNotes.trim()}.`;
   }
-  const para2 = capitalizeSentences(`${awakeningLine}${abilityLine} ${motivationLine}`);
+  const para2 = capitalizeSentences(`${awakeningLine}${subclassLine}${racialLine}${abilityLine} ${motivationLine}`);
 
   // Para 3: feats + closing
   const selectedFeats = feats.filter(f => FEATS[f]);
@@ -431,6 +643,20 @@ function generateArtPrompt(inputs, charName) {
   return `${raceDesc.charAt(0).toUpperCase() + raceDesc.slice(1)}, ${classDesc}.${setting} Fantasy RPG character portrait, ${moodDesc}, intricate details, digital art.`;
 }
 
+// ===== CHARACTER SHEET GENERATOR =====
+
+function generateCharacterSheet(inputs) {
+  const { race, characterClass, background, subclass } = inputs;
+  return {
+    saves:      CLASS_SAVES[characterClass] || [],
+    classSkills: CLASS_SKILLS[characterClass] || { count: 2, options: [] },
+    bgSkills:   BACKGROUND_SKILLS[background] || [],
+    racialTraits: RACIAL_TRAITS[race]?.traits || [],
+    classFeatures: CLASS_FEATURES[characterClass]?.key || [],
+    subclass:   subclass ? (SUBCLASSES[characterClass] || []).find(s => s.key === subclass) : null,
+  };
+}
+
 // ===== PARTY STORY GENERATOR =====
 
 function generatePartyStory(characters) {
@@ -459,6 +685,7 @@ function generatePartyStory(characters) {
 let state = {
   race:           null,
   characterClass: null,
+  subclass:       null,
   alignment:      null,
   tone:           'heroic',
   feats:          new Set(),
@@ -495,11 +722,29 @@ function buildClassGrid() {
     card.innerHTML = `<span class="option-icon">${c.icon}</span>${c.label}`;
     card.addEventListener('click', () => {
       state.characterClass = c.key;
+      state.subclass = null;
       grid.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
       card.classList.add('selected');
+      populateSubclassSelect(c.key);
     });
     grid.appendChild(card);
   });
+}
+
+function populateSubclassSelect(classKey) {
+  const group  = document.getElementById('subclass-group');
+  const select = document.getElementById('subclass-select');
+  const subs   = SUBCLASSES[classKey] || [];
+  select.innerHTML = '<option value="">Select a subclass…</option>';
+  if (!subs.length) { group.classList.add('hidden'); return; }
+  subs.forEach(s => {
+    const opt = document.createElement('option');
+    opt.value = s.key;
+    opt.textContent = s.label;
+    select.appendChild(opt);
+  });
+  group.classList.remove('hidden');
+  select.onchange = () => { state.subclass = select.value || null; };
 }
 
 function buildAlignmentGrid() {
@@ -542,6 +787,7 @@ function buildFeatGrid() {
     btn.className = 'feat-tag';
     btn.dataset.key = f.key;
     btn.textContent = f.label;
+    if (FEAT_DESCRIPTIONS[f.key]) btn.title = FEAT_DESCRIPTIONS[f.key];
     btn.addEventListener('click', () => {
       if (state.feats.has(f.key)) { state.feats.delete(f.key); btn.classList.remove('selected'); }
       else { state.feats.add(f.key); btn.classList.add('selected'); }
@@ -598,6 +844,7 @@ function gatherInputs() {
     name:           document.getElementById('char-name').value,
     race:           state.race,
     characterClass: state.characterClass,
+    subclass:       state.subclass,
     background:     document.getElementById('background-select').value,
     alignment:      state.alignment,
     abilityNotes:   document.getElementById('ability-notes').value,
@@ -620,12 +867,13 @@ function runGenerate() {
   const backstory    = generateBackstory(inputs);
   const personality  = generatePersonalityFields(inputs);
   const artPrompt    = generateArtPrompt(inputs, inputs.name);
-  renderResult(inputs, backstory, personality, artPrompt);
+  const sheet        = generateCharacterSheet(inputs);
+  renderResult(inputs, backstory, personality, artPrompt, sheet);
 }
 
 // ===== RENDER RESULT =====
 
-function renderResult(inputs, backstory, personality, artPrompt) {
+function renderResult(inputs, backstory, personality, artPrompt, sheet) {
   const charName   = inputs.name.trim() || 'The Adventurer';
   const raceLabel  = RACE_LIST.find(r => r.key === inputs.race)?.label || '';
   const classLabel = CLASS_LIST.find(c => c.key === inputs.characterClass)?.label || '';
@@ -642,6 +890,9 @@ function renderResult(inputs, backstory, personality, artPrompt) {
   document.getElementById('result-flaw').textContent  = personality.flaw;
   document.getElementById('result-art-prompt').textContent = artPrompt;
 
+  // Character sheet
+  if (sheet) renderSheet(sheet);
+
   const resultSection = document.getElementById('result-section');
   resultSection.classList.remove('hidden');
   resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -649,6 +900,41 @@ function renderResult(inputs, backstory, personality, artPrompt) {
   // Wire save button with fresh data
   const saveBtn = document.getElementById('save-btn');
   saveBtn.onclick = () => saveCharacter(inputs, { backstory, ...personality, artPrompt });
+}
+
+// ===== SHEET RENDERER =====
+
+function renderSheet(sheet) {
+  const el = document.getElementById('result-sheet');
+  if (!el) return;
+
+  function makeSection(label, tags, cssClass) {
+    if (!tags.length) return '';
+    return `<div class="sheet-section">
+      <div class="sheet-section-label">${label}</div>
+      <div class="sheet-tags">${tags.map(t => `<span class="sheet-tag ${cssClass}">${t}</span>`).join('')}</div>
+    </div>`;
+  }
+
+  const classSkillsLabel = `Class Skills (choose ${sheet.classSkills.count})`;
+
+  let subclassHTML = '';
+  if (sheet.subclass) {
+    subclassHTML = `<div class="sheet-section">
+      <div class="sheet-section-label">Subclass</div>
+      <div class="sheet-subclass-name">${sheet.subclass.label}</div>
+      <div class="sheet-subclass-features">${sheet.subclass.features}</div>
+    </div>`;
+  }
+
+  el.innerHTML = [
+    makeSection('Saving Throw Proficiencies', sheet.saves, 'save-tag'),
+    makeSection(classSkillsLabel, sheet.classSkills.options, ''),
+    makeSection('Background Skills', sheet.bgSkills, ''),
+    makeSection('Racial Traits', sheet.racialTraits, 'trait-tag'),
+    makeSection('Key Class Features', sheet.classFeatures, 'feature-tag'),
+    subclassHTML,
+  ].join('');
 }
 
 // ===== COPY =====
@@ -687,6 +973,7 @@ function saveCharacter(inputs, outputs) {
     name:      inputs.name.trim() || 'The Adventurer',
     race:      inputs.race,
     characterClass: inputs.characterClass,
+    subclass:   inputs.subclass,
     background: inputs.background,
     alignment:  inputs.alignment,
     feats:      inputs.feats,
@@ -761,11 +1048,16 @@ function loadCharacter(c) {
     el.classList.toggle('selected', el.dataset.key === c.race);
   });
 
-  // Class
+  // Class + subclass
   state.characterClass = c.characterClass;
+  state.subclass = c.subclass || null;
   document.querySelectorAll('#class-grid .option-card').forEach(el => {
     el.classList.toggle('selected', el.dataset.key === c.characterClass);
   });
+  if (c.characterClass) {
+    populateSubclassSelect(c.characterClass);
+    if (c.subclass) document.getElementById('subclass-select').value = c.subclass;
+  }
 
   // Alignment
   state.alignment = c.alignment || null;
