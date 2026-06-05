@@ -284,6 +284,20 @@ body {
 .feat-tag:hover { background: #dcc888; border-color: var(--gold); }
 .feat-tag.selected { background: var(--feat-active); border-color: var(--feat-active); color: var(--feat-active-fg); }
 
+.feat-desc {
+  margin-top: 0.5rem;
+  padding: 0.55rem 0.85rem;
+  background: var(--card-bg-alt);
+  border: 1px solid #c8a870;
+  border-radius: var(--radius);
+  font-family: 'EB Garamond', serif;
+  font-size: 0.92rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  line-height: 1.5;
+}
+.feat-desc strong { font-style: normal; color: var(--ink); font-weight: 600; }
+
 /* ===== TONE ROW ===== */
 .tone-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
 .tone-btn {

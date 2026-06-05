@@ -780,7 +780,8 @@ function buildBackgroundSelect() {
 }
 
 function buildFeatGrid() {
-  const grid = document.getElementById('feat-grid');
+  const grid    = document.getElementById('feat-grid');
+  const descEl  = document.getElementById('feat-desc');
   FEAT_LIST.forEach(f => {
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -791,6 +792,10 @@ function buildFeatGrid() {
     btn.addEventListener('click', () => {
       if (state.feats.has(f.key)) { state.feats.delete(f.key); btn.classList.remove('selected'); }
       else { state.feats.add(f.key); btn.classList.add('selected'); }
+      if (FEAT_DESCRIPTIONS[f.key]) {
+        descEl.innerHTML = `<strong>${f.label}:</strong> ${FEAT_DESCRIPTIONS[f.key]}`;
+        descEl.classList.remove('hidden');
+      }
     });
     grid.appendChild(btn);
   });
