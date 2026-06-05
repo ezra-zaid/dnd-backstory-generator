@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-// ===== 5E SRD DATA =====
+﻿// ===== 5E SRD DATA =====
 
 const SUBCLASSES = {
   barbarian: [{ key: 'berserker',       label: 'Path of the Berserker',    features: 'Frenzy, Mindless Rage, Intimidating Presence, Retaliation' }],
@@ -203,8 +202,6 @@ const FEAT_DESCRIPTIONS = {
   'weapon-master':      '+1 STR or DEX. Gain proficiency with 4 weapons of your choice.',
 };
 
-=======
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
 // ===== LISTS =====
 
 const RACE_LIST = [
@@ -592,7 +589,6 @@ function generateBackstory(inputs) {
     var para1 = capitalizeSentences(`${originLine} ${displayName.split(' ')[0]} was ${raceLine}. ${conflictLine}`);
   }
 
-<<<<<<< HEAD
   // Para 2: class awakening + subclass narrative + ability notes + motivation
   const awakeningLine  = fill(pick(classData.awakenings), vars);
   const motivationLine = fill(pick(classData.motivation), vars);
@@ -604,20 +600,11 @@ function generateBackstory(inputs) {
   if (RACIAL_TRAITS[race]?.narrative) {
     racialLine = ' ' + fill(RACIAL_TRAITS[race].narrative, vars);
   }
-=======
-  // Para 2: class awakening + ability notes
-  const awakeningLine  = fill(pick(classData.awakenings), vars);
-  const motivationLine = fill(pick(classData.motivation), vars);
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
   let abilityLine = '';
   if (abilityNotes && abilityNotes.trim()) {
     abilityLine = ` Among those who knew ${displayName.split(' ')[0]}, the first thing noted was always this: ${abilityNotes.trim()}.`;
   }
-<<<<<<< HEAD
   const para2 = capitalizeSentences(`${awakeningLine}${subclassLine}${racialLine}${abilityLine} ${motivationLine}`);
-=======
-  const para2 = capitalizeSentences(`${awakeningLine}${abilityLine} ${motivationLine}`);
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
 
   // Para 3: feats + closing
   const selectedFeats = feats.filter(f => FEATS[f]);
@@ -656,7 +643,6 @@ function generateArtPrompt(inputs, charName) {
   return `${raceDesc.charAt(0).toUpperCase() + raceDesc.slice(1)}, ${classDesc}.${setting} Fantasy RPG character portrait, ${moodDesc}, intricate details, digital art.`;
 }
 
-<<<<<<< HEAD
 // ===== CHARACTER SHEET GENERATOR =====
 
 function generateCharacterSheet(inputs) {
@@ -671,8 +657,6 @@ function generateCharacterSheet(inputs) {
   };
 }
 
-=======
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
 // ===== PARTY STORY GENERATOR =====
 
 function generatePartyStory(characters) {
@@ -701,10 +685,7 @@ function generatePartyStory(characters) {
 let state = {
   race:           null,
   characterClass: null,
-<<<<<<< HEAD
   subclass:       null,
-=======
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
   alignment:      null,
   tone:           'heroic',
   feats:          new Set(),
@@ -741,21 +722,15 @@ function buildClassGrid() {
     card.innerHTML = `<span class="option-icon">${c.icon}</span>${c.label}`;
     card.addEventListener('click', () => {
       state.characterClass = c.key;
-<<<<<<< HEAD
       state.subclass = null;
       grid.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
       card.classList.add('selected');
       populateSubclassSelect(c.key);
-=======
-      grid.querySelectorAll('.option-card').forEach(el => el.classList.remove('selected'));
-      card.classList.add('selected');
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
     });
     grid.appendChild(card);
   });
 }
 
-<<<<<<< HEAD
 function populateSubclassSelect(classKey) {
   const group  = document.getElementById('subclass-group');
   const select = document.getElementById('subclass-select');
@@ -772,8 +747,6 @@ function populateSubclassSelect(classKey) {
   select.onchange = () => { state.subclass = select.value || null; };
 }
 
-=======
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
 function buildAlignmentGrid() {
   const grid = document.getElementById('alignment-grid');
   ALIGNMENT_LIST.forEach(a => {
@@ -814,10 +787,7 @@ function buildFeatGrid() {
     btn.className = 'feat-tag';
     btn.dataset.key = f.key;
     btn.textContent = f.label;
-<<<<<<< HEAD
     if (FEAT_DESCRIPTIONS[f.key]) btn.title = FEAT_DESCRIPTIONS[f.key];
-=======
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
     btn.addEventListener('click', () => {
       if (state.feats.has(f.key)) { state.feats.delete(f.key); btn.classList.remove('selected'); }
       else { state.feats.add(f.key); btn.classList.add('selected'); }
@@ -874,10 +844,7 @@ function gatherInputs() {
     name:           document.getElementById('char-name').value,
     race:           state.race,
     characterClass: state.characterClass,
-<<<<<<< HEAD
     subclass:       state.subclass,
-=======
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
     background:     document.getElementById('background-select').value,
     alignment:      state.alignment,
     abilityNotes:   document.getElementById('ability-notes').value,
@@ -900,21 +867,13 @@ function runGenerate() {
   const backstory    = generateBackstory(inputs);
   const personality  = generatePersonalityFields(inputs);
   const artPrompt    = generateArtPrompt(inputs, inputs.name);
-<<<<<<< HEAD
   const sheet        = generateCharacterSheet(inputs);
   renderResult(inputs, backstory, personality, artPrompt, sheet);
-=======
-  renderResult(inputs, backstory, personality, artPrompt);
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
 }
 
 // ===== RENDER RESULT =====
 
-<<<<<<< HEAD
 function renderResult(inputs, backstory, personality, artPrompt, sheet) {
-=======
-function renderResult(inputs, backstory, personality, artPrompt) {
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
   const charName   = inputs.name.trim() || 'The Adventurer';
   const raceLabel  = RACE_LIST.find(r => r.key === inputs.race)?.label || '';
   const classLabel = CLASS_LIST.find(c => c.key === inputs.characterClass)?.label || '';
@@ -931,12 +890,9 @@ function renderResult(inputs, backstory, personality, artPrompt) {
   document.getElementById('result-flaw').textContent  = personality.flaw;
   document.getElementById('result-art-prompt').textContent = artPrompt;
 
-<<<<<<< HEAD
   // Character sheet
   if (sheet) renderSheet(sheet);
 
-=======
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
   const resultSection = document.getElementById('result-section');
   resultSection.classList.remove('hidden');
   resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -946,7 +902,6 @@ function renderResult(inputs, backstory, personality, artPrompt) {
   saveBtn.onclick = () => saveCharacter(inputs, { backstory, ...personality, artPrompt });
 }
 
-<<<<<<< HEAD
 // ===== SHEET RENDERER =====
 
 function renderSheet(sheet) {
@@ -982,8 +937,6 @@ function renderSheet(sheet) {
   ].join('');
 }
 
-=======
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
 // ===== COPY =====
 
 document.getElementById('copy-btn').addEventListener('click', () => {
@@ -1020,10 +973,7 @@ function saveCharacter(inputs, outputs) {
     name:      inputs.name.trim() || 'The Adventurer',
     race:      inputs.race,
     characterClass: inputs.characterClass,
-<<<<<<< HEAD
     subclass:   inputs.subclass,
-=======
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
     background: inputs.background,
     alignment:  inputs.alignment,
     feats:      inputs.feats,
@@ -1098,7 +1048,6 @@ function loadCharacter(c) {
     el.classList.toggle('selected', el.dataset.key === c.race);
   });
 
-<<<<<<< HEAD
   // Class + subclass
   state.characterClass = c.characterClass;
   state.subclass = c.subclass || null;
@@ -1109,13 +1058,6 @@ function loadCharacter(c) {
     populateSubclassSelect(c.characterClass);
     if (c.subclass) document.getElementById('subclass-select').value = c.subclass;
   }
-=======
-  // Class
-  state.characterClass = c.characterClass;
-  document.querySelectorAll('#class-grid .option-card').forEach(el => {
-    el.classList.toggle('selected', el.dataset.key === c.characterClass);
-  });
->>>>>>> efc5e6b009e76be180ed0ca385e147500f3f7d36
 
   // Alignment
   state.alignment = c.alignment || null;
