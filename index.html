@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>D&D Backstory Generator</title>
+  <title>D&D Backstory Forge</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
@@ -19,74 +19,174 @@
     </div>
   </header>
 
+  <nav class="tab-nav" role="tablist">
+    <button class="tab active" data-panel="builder" role="tab" aria-selected="true">⚔ Builder</button>
+    <button class="tab" data-panel="saved" role="tab" aria-selected="false">📋 Saved</button>
+    <button class="tab" data-panel="party" role="tab" aria-selected="false">⚜ Party Mode</button>
+  </nav>
+
   <main class="main-content">
-    <form id="backstory-form" class="form-card" novalidate>
 
-      <!-- Character Name -->
-      <div class="field-group">
-        <label class="field-label" for="char-name">Character Name <span class="field-hint">(optional)</span></label>
-        <div class="name-row">
-          <input type="text" id="char-name" class="text-input" placeholder="e.g. Aelindra Moonsong" autocomplete="off" maxlength="40">
-          <button type="button" class="random-name-btn" id="random-name-btn" title="Random name">&#x2684;</button>
+    <!-- ===== BUILDER PANEL ===== -->
+    <div id="panel-builder" class="panel">
+      <form id="backstory-form" class="form-card" novalidate>
+
+        <div class="field-group">
+          <label class="field-label" for="char-name">Character Name <span class="field-hint">(optional)</span></label>
+          <div class="name-row">
+            <input type="text" id="char-name" class="text-input" placeholder="e.g. Aelindra Moonsong" autocomplete="off" maxlength="40">
+            <button type="button" class="random-name-btn" id="random-name-btn" title="Random name">&#x2684;</button>
+          </div>
         </div>
-      </div>
 
-      <!-- Race -->
-      <div class="field-group">
-        <label class="field-label">Race</label>
-        <div class="option-grid" id="race-grid" role="radiogroup" aria-label="Race"></div>
-      </div>
-
-      <!-- Class -->
-      <div class="field-group">
-        <label class="field-label">Class</label>
-        <div class="option-grid" id="class-grid" role="radiogroup" aria-label="Class"></div>
-      </div>
-
-      <!-- Background -->
-      <div class="field-group">
-        <label class="field-label" for="background-select">Background</label>
-        <select id="background-select" class="select-input">
-          <option value="">Select a background…</option>
-        </select>
-      </div>
-
-      <!-- Feats -->
-      <div class="field-group">
-        <label class="field-label">Feats <span class="field-hint">(pick any — up to 3 woven into the story)</span></label>
-        <div class="feat-grid" id="feat-grid" role="group" aria-label="Feats"></div>
-      </div>
-
-      <!-- Tone -->
-      <div class="field-group">
-        <label class="field-label">Tone</label>
-        <div class="tone-row" id="tone-row" role="radiogroup" aria-label="Tone"></div>
-      </div>
-
-      <div id="form-error" class="form-error hidden"></div>
-
-      <button type="submit" class="generate-btn" id="generate-btn">
-        <span class="btn-diamond" aria-hidden="true">✦</span>
-        Generate Backstory
-        <span class="btn-diamond" aria-hidden="true">✦</span>
-      </button>
-
-    </form>
-
-    <!-- Result -->
-    <div id="result-section" class="result-section hidden">
-      <div class="scroll-wrap">
-        <div class="scroll-top-bar"></div>
-        <div class="scroll-body-wrap">
-          <div class="scroll-char-name" id="result-name"></div>
-          <div class="scroll-meta" id="result-meta"></div>
-          <div class="scroll-divider" aria-hidden="true">— ✦ —</div>
-          <div class="scroll-text" id="result-text"></div>
+        <div class="field-group">
+          <label class="field-label">Race</label>
+          <div class="option-grid" id="race-grid" role="radiogroup" aria-label="Race"></div>
         </div>
-        <div class="scroll-bottom-bar"></div>
-        <div class="scroll-actions">
-          <button type="button" class="action-btn" id="regenerate-btn">↺ Regenerate</button>
-          <button type="button" class="action-btn" id="copy-btn">⎘ Copy</button>
+
+        <div class="field-group">
+          <label class="field-label">Class</label>
+          <div class="option-grid" id="class-grid" role="radiogroup" aria-label="Class"></div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="background-select">Background</label>
+          <select id="background-select" class="select-input">
+            <option value="">Select a background…</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Alignment <span class="field-hint">(optional)</span></label>
+          <div class="alignment-grid" id="alignment-grid" role="radiogroup" aria-label="Alignment"></div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="ability-notes">Ability Highlights <span class="field-hint">(optional)</span></label>
+          <input type="text" id="ability-notes" class="text-input" placeholder="e.g. exceptionally wise but physically frail" autocomplete="off" maxlength="80">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="campaign-setting">Campaign Setting <span class="field-hint">(optional)</span></label>
+          <textarea id="campaign-setting" class="textarea-input" rows="2" placeholder="e.g. a dark gothic empire at war, or a tropical archipelago of pirates" maxlength="200"></textarea>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Feats <span class="field-hint">(pick any — up to 3 woven into the story)</span></label>
+          <div class="feat-grid" id="feat-grid" role="group" aria-label="Feats"></div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Tone</label>
+          <div class="tone-row" id="tone-row" role="radiogroup" aria-label="Tone"></div>
+        </div>
+
+        <div id="form-error" class="form-error hidden"></div>
+
+        <button type="submit" class="generate-btn" id="generate-btn">
+          <span class="btn-diamond" aria-hidden="true">✦</span>
+          Generate Backstory
+          <span class="btn-diamond" aria-hidden="true">✦</span>
+        </button>
+      </form>
+
+      <!-- Result -->
+      <div id="result-section" class="result-section hidden">
+
+        <!-- Backstory scroll -->
+        <div class="scroll-wrap">
+          <div class="scroll-top-bar"></div>
+          <div class="scroll-body-wrap">
+            <div class="scroll-char-name" id="result-name"></div>
+            <div class="scroll-meta" id="result-meta"></div>
+            <div class="scroll-divider" aria-hidden="true">— ✦ —</div>
+            <div class="scroll-text" id="result-text"></div>
+          </div>
+          <div class="scroll-bottom-bar"></div>
+          <div class="scroll-actions">
+            <button type="button" class="action-btn" id="regenerate-btn">↺ Regenerate</button>
+            <button type="button" class="action-btn" id="copy-btn">⎘ Copy</button>
+            <button type="button" class="action-btn action-btn-save" id="save-btn">🔖 Save Character</button>
+          </div>
+        </div>
+
+        <!-- Personality fields -->
+        <div class="parchment-card">
+          <h3 class="card-heading">Character Profile</h3>
+          <div class="personality-grid">
+            <div class="personality-field">
+              <div class="pf-label">Personality Trait</div>
+              <div class="pf-text" id="result-trait"></div>
+            </div>
+            <div class="personality-field">
+              <div class="pf-label">Ideal</div>
+              <div class="pf-text" id="result-ideal"></div>
+            </div>
+            <div class="personality-field">
+              <div class="pf-label">Bond</div>
+              <div class="pf-text" id="result-bond"></div>
+            </div>
+            <div class="personality-field">
+              <div class="pf-label">Flaw</div>
+              <div class="pf-text" id="result-flaw"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Art prompt -->
+        <div class="parchment-card">
+          <h3 class="card-heading">Art Prompt</h3>
+          <p class="field-hint" style="margin-bottom:0.7rem">Paste into Midjourney, DALL-E, or any image generator.</p>
+          <div class="art-prompt-text" id="result-art-prompt"></div>
+          <div style="margin-top:0.9rem">
+            <button type="button" class="action-btn" id="copy-art-btn">⎘ Copy Art Prompt</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== SAVED PANEL ===== -->
+    <div id="panel-saved" class="panel hidden">
+      <div class="panel-header">
+        <h2 class="panel-title">Saved Characters</h2>
+        <p class="panel-sub">Click a character to load their full profile back into the Builder.</p>
+      </div>
+      <div id="saved-grid" class="saved-grid">
+        <p class="empty-state" id="saved-empty">No characters saved yet. Generate a backstory and click <strong>Save Character</strong>.</p>
+      </div>
+    </div>
+
+    <!-- ===== PARTY PANEL ===== -->
+    <div id="panel-party" class="panel hidden">
+      <div class="panel-header">
+        <h2 class="panel-title">Party Mode</h2>
+        <p class="panel-sub">Select 2–4 saved characters to generate a shared origin story.</p>
+      </div>
+      <div id="party-select-grid" class="saved-grid"></div>
+      <div id="party-empty" class="empty-state hidden">Save at least 2 characters first to use Party Mode.</div>
+      <div id="party-controls" class="party-controls hidden">
+        <div id="party-count" class="party-count"></div>
+        <button type="button" class="generate-btn" id="party-generate-btn" disabled>
+          <span class="btn-diamond" aria-hidden="true">✦</span>
+          Generate Party Story
+          <span class="btn-diamond" aria-hidden="true">✦</span>
+        </button>
+      </div>
+      <div id="party-result" class="result-section hidden">
+        <div class="scroll-wrap">
+          <div class="scroll-top-bar"></div>
+          <div class="scroll-body-wrap">
+            <div class="scroll-char-name">The Party</div>
+            <div class="scroll-meta" id="party-meta"></div>
+            <div class="scroll-divider" aria-hidden="true">— ✦ —</div>
+            <div class="scroll-text" id="party-text"></div>
+          </div>
+          <div class="scroll-bottom-bar"></div>
+          <div class="scroll-actions">
+            <button type="button" class="action-btn" id="party-regenerate-btn">↺ Regenerate</button>
+            <button type="button" class="action-btn" id="party-copy-btn">⎘ Copy</button>
+          </div>
         </div>
       </div>
     </div>
